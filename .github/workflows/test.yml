@@ -38,6 +38,10 @@ jobs:
         run: |
           cd build
           cmake --build . 
+    - name: List directory contents
+      run: |
+        cd build
+        ls
       - name: test
         run: |
           cd build
