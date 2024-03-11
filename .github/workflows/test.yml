@@ -42,6 +42,11 @@ jobs:
         run: |
           cd build
           ls
+      - name: List debug contents
+        run: |
+          cd build
+          cd Debug
+          ls
       - name: test
         run: |
           cd build
