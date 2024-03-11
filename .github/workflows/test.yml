@@ -24,7 +24,7 @@ jobs:
         run: |
           cd build
           ./stockprice
-  test-unix:
+  test-windows:
     runs-on: windows-latest
     steps:
       - name: Git clone the repository
