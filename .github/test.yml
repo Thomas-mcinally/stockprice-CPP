@@ -1,0 +1,45 @@
+---
+name: test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test-unix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: pre-build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+      - name: build
+        run: |
+          cd build
+          cmake --build .
+      - name: test
+        run: |
+          cd build
+          ./stockprice
+  test-unix:
+    runs-on: windows-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: pre-build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+      - name: build
+        run: |
+          cd build
+          cmake --build . 
+      - name: test
+        run: |
+          cd build
+          stockprice.exe
