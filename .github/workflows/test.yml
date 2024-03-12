@@ -42,10 +42,10 @@ jobs:
         run: |
           cd build
           ls
-      - name: List debug contents
+      - name: List Release contents
         run: |
           cd build
-          cd Debug
+          cd Release
           ls
       - name: List stockprice.dir contents
         run: |
