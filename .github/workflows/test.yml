@@ -54,4 +54,5 @@ jobs:
           ls
       - name: test
         run: |
-          ./build/Release/stockprice.exe
+          .\build\Release\stockprice.exe
+        shell: pwsh
