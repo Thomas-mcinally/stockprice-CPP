@@ -15,7 +15,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake .. -DCMAKE_BUILD_TYPE=Release
       - name: build
         run: |
           cd build
@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake .. -DCMAKE_BUILD_TYPE=Release
       - name: build
         run: |
           cd build
