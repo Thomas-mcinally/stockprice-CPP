@@ -55,4 +55,5 @@ jobs:
       - name: test
         run: |
           cd build
+          cd Debug
           stockprice.exe
