@@ -54,6 +54,4 @@ jobs:
           ls
       - name: test
         run: |
-          cd build
-          cd Release
-          stockprice.exe
+          ./build/Release/stockprice.exe
