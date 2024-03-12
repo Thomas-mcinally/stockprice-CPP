@@ -34,24 +34,12 @@ jobs:
           mkdir build
           cd build
           cmake ..
+        shell: pwsh
       - name: build
         run: |
           cd build
           cmake --build . --config Release
-      - name: List directory contents
-        run: |
-          cd build
-          ls
-      - name: List Release contents
-        run: |
-          cd build
-          cd Release
-          ls
-      - name: List stockprice.dir contents
-        run: |
-          cd build
-          cd stockprice.dir
-          ls
+        shell: pwsh
       - name: test
         run: |
           .\build\Release\stockprice.exe
