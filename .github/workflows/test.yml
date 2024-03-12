@@ -47,6 +47,11 @@ jobs:
           cd build
           cd Debug
           ls
+      - name: List stockprice.dir contents
+        run: |
+          cd build
+          cd stockprice.dir
+          ls
       - name: test
         run: |
           cd build
