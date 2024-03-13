@@ -40,11 +40,6 @@ jobs:
           cd build
           cmake --build . --config Release
         shell: pwsh
-      - name: list Release
-        run: |
-          cd build
-          cd Release
-          ls
       - name: test
         run: |
           .\build\Release\stockprice.exe
