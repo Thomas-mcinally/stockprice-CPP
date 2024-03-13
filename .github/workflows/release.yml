@@ -1,0 +1,56 @@
+name: Main
+
+on:
+  push:
+    branches:
+      - main
+  
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            bin_path: ./build/stockprice
+            compressed_name: stockprice-bin-Linux-x86_64.tar.gz
+          - os: macOS-latest
+            bin_path: ./build/stockprice
+            compressed_name: stockprice-bin-Darwin-x86_64.tar.gz
+          - os: windows-latest
+            bin_path: ./build/Release/stockprice.exe
+            compressed_name: stockprice-bin-Windows-x86_64.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: pre-build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+      - name: build
+        run: |
+          cd build
+          cmake --build . --config Release
+      - name: Package
+        shell: bash
+        run: |
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]
+          then
+            7z a ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
+          else
+            tar czvf ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
+          fi
+          ls -l
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: 'stockprice-bin-*'
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
