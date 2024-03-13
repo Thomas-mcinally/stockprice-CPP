@@ -47,18 +47,16 @@ jobs:
             tar czvf ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
           fi
           ls -l
-      - name: Grab version 
+      - name: Grab version from VERSION file
         run: |
           version=$(head -n 1 VERSION)
           echo "Releasing for version $version"
           echo "RELEASE_VERSION=$version" >> $GITHUB_ENV
-      # - name: Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     files: 'stockprice-bin-*'
-      #     tag_name: github.ref
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Echo version
-        run: |
-          echo ${{ env.RELEASE_VERSION }}
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: 'stockprice-bin-*'
+          name: Release v${{ env.RELEASE_VERSION }}
+          tag_name: ${{ env.RELEASE_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
