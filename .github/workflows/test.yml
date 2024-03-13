@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test-unix:
+  test-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -20,6 +20,23 @@ jobs:
         run: |
           cd build
           cmake --build .
+      - name: test
+        run: |
+          ./build/stockprice
+  test-macos:
+    runs-on: macOS-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: pre-build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+      - name: build
+        run: |
+          cd build
+          cmake --build . 
       - name: test
         run: |
           ./build/stockprice
