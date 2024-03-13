@@ -22,8 +22,7 @@ jobs:
           cmake --build .
       - name: test
         run: |
-          cd build
-          ./stockprice
+          ./build/stockprice
   test-windows:
     runs-on: windows-latest
     steps:
