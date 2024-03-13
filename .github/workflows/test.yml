@@ -41,5 +41,5 @@ jobs:
         shell: pwsh
       - name: test
         run: |
-          .\build\Release\stockprice.exe
+          ./build/Release/stockprice.exe
         shell: pwsh
