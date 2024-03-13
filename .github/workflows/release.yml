@@ -1,6 +1,9 @@
 name: Main
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   release:
@@ -10,10 +13,13 @@ jobs:
         include:
           - os: ubuntu-latest
             bin_path: ./build/stockprice
+            compressed_name: stockprice-bin-Linux-x86_64.tar.gz
           - os: macOS-latest
             bin_path: ./build/stockprice
+            compressed_name: stockprice-bin-Darwin-x86_64.tar.gz
           - os: windows-latest
             bin_path: ./build/Release/stockprice.exe
+            compressed_name: stockprice-bin-Windows-x86_64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
@@ -27,11 +33,17 @@ jobs:
         run: |
           cd build
           cmake --build . --config Release
-      - name: test
+      - name: Package
+        shell: bash
         run: |
-          ${{ matrix.bin_path }}
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]
+          then
+            7z a ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
+          else
+            tar czvf ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
+          fi
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ${{ matrix.bin_path }}
+          files: ${{ matrix.compressed_name }}
