@@ -6,8 +6,18 @@ on:
   pull_request:
 
 jobs:
-  test-linux:
-    runs-on: ubuntu-latest
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            bin_path: ./build/stockprice
+          - os: macOS-latest
+            bin_path: ./build/stockprice
+          - os: windows-latest
+            bin_path: ./build/Release/stockprice.exe
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
@@ -16,47 +26,10 @@ jobs:
           mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
-      - name: build
-        run: |
-          cd build
-          cmake --build .
-      - name: test
-        run: |
-          ./build/stockprice
-  test-macos:
-    runs-on: macOS-latest
-    steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v3
-      - name: pre-build
-        run: |
-          mkdir build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-      - name: build
-        run: |
-          cd build
-          cmake --build . 
-      - name: test
-        run: |
-          ./build/stockprice
-  test-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Git clone the repository
-        uses: actions/checkout@v3
-      - name: pre-build
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-        shell: pwsh
       - name: build
         run: |
           cd build
           cmake --build . --config Release
-        shell: pwsh
       - name: test
         run: |
-          ./build/Release/stockprice.exe
-        shell: pwsh
+          ${{ matrix.bin_path }}
