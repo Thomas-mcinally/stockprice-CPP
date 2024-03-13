@@ -4,8 +4,11 @@ on:
   push:
     branches:
       - main
+  pull_request:
+  
 permissions:
   contents: write
+
 jobs:
   release:
     strategy:
@@ -43,11 +46,11 @@ jobs:
           else
             tar czvf ./${{ matrix.compressed_name }} ${{ matrix.bin_path }}
           fi
-      - name: Release
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: 'stockprice-bin-*'
+      # - name: Release
+      #   uses: softprops/action-gh-release@v2
+      #   if: startsWith(github.ref, 'refs/tags/')
+      #   with:
+      #     files: 'stockprice-bin-*'
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
