@@ -48,6 +48,7 @@ jobs:
           fi
           ls -l
       - name: Grab version from VERSION file
+        shell: bash
         run: |
           version=$(head -n 1 VERSION)
           echo "Releasing for version $version"
