@@ -24,8 +24,15 @@ endif()
 add_executable(stockprice main.cpp)
 
 include(FetchContent)
+
+FetchContent_Declare(curl
+URL                    https://github.com/curl/curl/releases/download/curl-8_4_0/curl-8.4.0.tar.xz
+URL_HASH               SHA256=16c62a9c4af0f703d28bda6d7bbf37ba47055ad3414d70dec63e2e6336f2a82d # the file hash for curl-8.4.0.tar.xz
+USES_TERMINAL_DOWNLOAD TRUE)   # <---- This is needed only for Ninja to show download progress
+FetchContent_MakeAvailable(curl)
+set(CPR_USE_SYSTEM_CURL ON)
 FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
-                         GIT_TAG 3020c34ae2b732121f37433e61599c34535e68a8)
+                   GIT_TAG 3020c34ae2b732121f37433e61599c34535e68a8)
 FetchContent_MakeAvailable(cpr)
 
 target_link_libraries(stockprice PRIVATE cpr::cpr)
