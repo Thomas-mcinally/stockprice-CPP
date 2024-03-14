@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
+      - name: Check libcurl version
+        run: curl-config --version
       - name: pre-build
         run: |
           mkdir build
