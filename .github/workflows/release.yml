@@ -1,4 +1,4 @@
-name: Main
+name: Release
 
 on:
   push:
@@ -13,17 +13,17 @@ jobs:
   release:
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [macOS-latest]
         include:
-          - os: ubuntu-latest
-            bin_path: ./build/stockprice
-            compressed_name: stockprice-bin-Linux-x86_64.tar.gz
+          # - os: ubuntu-latest
+          #   bin_path: ./build/stockprice
+          #   compressed_name: stockprice-bin-Linux-x86_64.tar.gz
           - os: macOS-latest
             bin_path: ./build/stockprice
             compressed_name: stockprice-bin-Darwin-x86_64.tar.gz
-          - os: windows-latest
-            bin_path: ./build/Release/stockprice.exe
-            compressed_name: stockprice-bin-Windows-x86_64.zip
+          # - os: windows-latest
+          #   bin_path: ./build/Release/stockprice.exe
+          #   compressed_name: stockprice-bin-Windows-x86_64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
