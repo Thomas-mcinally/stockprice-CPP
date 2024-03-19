@@ -1,7 +1,7 @@
 # stockprice-CPP
 - CLI tool to check prices of stocks and cryptocurrencies, [see python version for demo](https://github.com/Thomas-mcinally/stockprice)
 - Implemented in CPP on order to distribute as static binary
-- Currently distribute binaries only for MacOS, x86_64 and arm64 CPU architectures
+- Currently distribute binaries only for MacOS, both x86_64 and arm64 CPU architectures
 
 ## Installation
 - Download the appropriate MacOS binary from [release page](https://github.com/Thomas-mcinally/stockprice-CPP/releases/)
