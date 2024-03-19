@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  # pull_request:
 
 jobs:
   test:
@@ -24,7 +24,7 @@ jobs:
       - name: build OpenSSL
         run: |
           cd openssl-3.2.1
-          ./Configure no-shared no-zlib no-asm enable-rc5 darwin64-x86_64-cc
+          ./Configure no-shared no-zlib enable-rc5 darwin64-x86_64-cc
           make
       - name: build Stockprice
         run: |
