@@ -11,12 +11,8 @@ jobs:
       matrix:
         os: [macOS-latest]
         include:
-          # - os: ubuntu-latest
-          #   bin_path: ./build/stockprice
           - os: macOS-latest
             bin_path: ./build/stockprice
-          # - os: windows-latest
-          #   bin_path: ./build/Release/stockprice.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository

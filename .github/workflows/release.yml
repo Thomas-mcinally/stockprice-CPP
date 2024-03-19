@@ -14,27 +14,23 @@ jobs:
       matrix:
         os: [macOS-latest]
         include:
-          # - os: ubuntu-latest
-          #   bin_path: ./build/stockprice
-          #   compressed_name: stockprice-bin-Linux-x86_64.tar.gz
           - os: macOS-latest
             bin_path: ./build/stockprice
             compressed_name: stockprice-bin-Darwin-x86_64.tar.gz
-          # - os: windows-latest
-          #   bin_path: ./build/Release/stockprice.exe
-          #   compressed_name: stockprice-bin-Windows-x86_64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
-      - name: pre-build
+      - name: build OpenSSL
+        run: |
+          cd openssl-3.2.1
+          ./Configure no-shared no-zlib enable-rc5 darwin64-x86_64-cc
+          make
+      - name: build Stockprice
         run: |
           mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
-      - name: build
-        run: |
-          cd build
           cmake --build . --config Release
       - name: Package
         shell: bash
