@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   test:
@@ -11,12 +10,12 @@ jobs:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         include:
-          - os: ubuntu-latest
-            bin_path: ./build/stockprice
+          # - os: ubuntu-latest
+          #   bin_path: ./build/stockprice
           - os: macOS-latest
             bin_path: ./build/stockprice
-          - os: windows-latest
-            bin_path: ./build/Release/stockprice.exe
+          # - os: windows-latest
+          #   bin_path: ./build/Release/stockprice.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository

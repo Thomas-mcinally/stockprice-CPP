@@ -1,4 +1,3 @@
-#include <iostream>
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "../include/httplib/httplib.h"
 
@@ -6,10 +5,10 @@
 int main(int argc, char** argv) {
 
 
-    // HTTPS
     httplib::Client cli("https://query2.finance.yahoo.com");
+    cli.enable_server_certificate_verification(false); // Want to distribute as static binary
     auto res = cli.Get("/v8/finance/chart/BTC-USD?interval=1d&range=30d");
-    std::cout << "Status code: " << res->status << '\n';
-    std::cout << "Text: " << res->body << '\n';
+
+    printf("Status code: %d\n", res->status);
     return 0;
 }
