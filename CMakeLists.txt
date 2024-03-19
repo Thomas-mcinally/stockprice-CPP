@@ -1,31 +1,22 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 11)
+project(Stockprice)
 
-set(BUILD_SHARED_LIBS OFF) # static linking of included libraries (cpr & libcurl)
-
-project(stockprice)
-
-set(CMAKE_CXX_STANDARD 17)
-
-set(DEFAULT_BUILD_TYPE "Release")
-
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
-  set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64")
+    set(OPENSSL_CONFIGURE_TRIPLET "darwin64-arm64-cc")
+elseif(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
+    set(OPENSSL_CONFIGURE_TRIPLET "darwin64-x86_64-cc")
+else()
+    message(FATAL_ERROR "Unsupported architecture: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 endif()
+add_custom_target(openssl
+    COMMAND ./Configure no-shared no-zlib enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
+    COMMAND make
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
+)
+include_directories(${CMAKE_SOURCE_DIR}/openssl-3.2.1/include)
 
-if(WIN32)
-    # Install DLLs in the same directory as the executable on Windows
-    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-endif()
+add_executable(Stockprice src/main.cpp)
+add_dependencies(Stockprice openssl)
 
-add_executable(stockprice main.cpp)
-
-include(FetchContent)
-FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
-                         GIT_TAG 3020c34ae2b732121f37433e61599c34535e68a8)
-FetchContent_MakeAvailable(cpr)
-
-target_link_libraries(stockprice PRIVATE cpr::cpr)
+target_link_libraries(Stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a)

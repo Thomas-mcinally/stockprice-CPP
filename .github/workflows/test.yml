@@ -9,26 +9,19 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [macOS-latest]
         include:
-          - os: ubuntu-latest
-            bin_path: ./build/stockprice
           - os: macOS-latest
             bin_path: ./build/stockprice
-          - os: windows-latest
-            bin_path: ./build/Release/stockprice.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
-      - name: pre-build
+      - name: build 
         run: |
           mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
-      - name: build
-        run: |
-          cd build
           cmake --build . --config Release
       - name: test
         run: |

@@ -2,3 +2,4 @@ build/
 .cache/
 todo.txt
 .vscode/
+openssl-3.2.1/
