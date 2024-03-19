@@ -2,4 +2,5 @@ build/
 .cache/
 todo.txt
 .vscode/
+.DS_Store
 openssl-3.2.1/
