@@ -3,12 +3,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [macOS-latest]
         include:
           # - os: ubuntu-latest
           #   bin_path: ./build/stockprice
@@ -20,14 +21,16 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v3
-      - name: pre-build
+      - name: build OpenSSL
+        run: |
+          cd openssl-3.2.1
+          ./Configure no-shared no-zlib no-asm enable-rc5 darwin64-x86_64-cc
+          make
+      - name: build Stockprice
         run: |
           mkdir build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release
-      - name: build
-        run: |
-          cd build
           cmake --build . --config Release
       - name: test
         run: |
