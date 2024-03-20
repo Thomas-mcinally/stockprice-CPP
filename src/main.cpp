@@ -9,11 +9,12 @@ int main(int argc, char** argv) {
         return 0;
     }
     std::string ticker = argv[1];
-    printf("Ticker provided: %s\n", ticker.c_str());
 
     httplib::Client cli("https://query2.finance.yahoo.com");
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
-    auto res = cli.Get("/v8/finance/chart/BTC-USD?interval=1d&range=30d");
+    std::string url = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
+    
+    auto res = cli.Get(url);
 
     printf("Status code: %d\n", res->status);
     printf("Body: %s\n", res->body.c_str());
