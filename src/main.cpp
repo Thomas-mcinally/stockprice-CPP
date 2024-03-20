@@ -12,11 +12,11 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
 
     auto now = std::chrono::system_clock::now();
     auto date_n_days_ago = now - std::chrono::hours(24*n);
-    std::time_t previous_timestamp  = std::chrono::system_clock::to_time_t(date_n_days_ago);
+    std::time_t start_timestamp  = std::chrono::system_clock::to_time_t(date_n_days_ago);
 
     int i = 0;
     while (i < timestamps.size()-1) {
-        if (timestamps[i+1] >= previous_timestamp) break;
+        if (timestamps[i+1] >= start_timestamp) break;
         i++;
     }
     price_on_last_trading_day_n_days_ago = closing_prices[i];
