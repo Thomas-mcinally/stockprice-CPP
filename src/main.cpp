@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     httplib::Client cli("https://query2.finance.yahoo.com");
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
 
-    for(const auto& ticker : tickers) {
+    for(std::string &ticker : tickers) {
         std::string url = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
         auto res = cli.Get(url.c_str());
 
@@ -32,3 +32,7 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
+// Todo:
+// - add function to extract info from response body
+// - use this function in main loop
