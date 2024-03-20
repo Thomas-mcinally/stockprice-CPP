@@ -22,8 +22,8 @@ int main(int argc, char** argv) {
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
 
     for(std::string &ticker : tickers) {
-        std::string url = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
-        auto res = cli.Get(url.c_str());
+        std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
+        auto res = cli.Get(path);
 
         printf("Status code: %d\n", res->status);
         printf("Body: %s\n", res->body.c_str());
