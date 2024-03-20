@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        printf("Please provide o comman-delimited list of tickets\n");
+        printf("Please provide a comma-delimited list of tickers\n");
         printf("Example: stockprice tsla,btc-usd\n");
         return 0;
     }
