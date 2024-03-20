@@ -27,6 +27,7 @@ int main(int argc, char** argv) {
 
         printf("Status code: %d\n", res->status);
         printf("Body: %s\n", res->body.c_str());
+        printf("\n%s\n", res->get_header_value("Content-Type").c_str());
     }
 
     return 0;
