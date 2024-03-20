@@ -1,5 +1,6 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "../include/httplib/httplib.h"
+#include "../include/nlohmann_json/json.hpp"
 #include <sstream>
 #include <vector>
 
@@ -25,9 +26,12 @@ int main(int argc, char** argv) {
         std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
         auto res = cli.Get(path);
 
+        nlohmann::json response_json = nlohmann::json::parse(res->body);
+        std::vector<double> closing_prices = response_json["chart"]["result"][0]["indicators"]["quote"][0]["close"];
+        std::string currency = response_json["chart"]["result"][0]["meta"]["currency"];
         printf("Status code: %d\n", res->status);
-        printf("Body: %s\n", res->body.c_str());
-        printf("\n%s\n", res->get_header_value("Content-Type").c_str());
+        printf("first closing price: %f\n", closing_prices[0]);
+        printf("currency: %s\n", currency.c_str());
     }
 
     return 0;
