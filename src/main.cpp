@@ -8,19 +8,23 @@
 
 double calculate_percentage_price_change_over_n_days(int n, std::vector<int> timestamps, std::vector<double> closing_prices) {
     double current_price = closing_prices.back();
-    double price_on_last_trading_day_n_days_ago;
+    double price_n_days_ago;
 
-    auto now = std::chrono::system_clock::now();
-    auto date_n_days_ago = now - std::chrono::hours(24*n);
-    std::time_t start_timestamp  = std::chrono::system_clock::to_time_t(date_n_days_ago);
+    std::time_t now_timestamp = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    std::time_t start_timestamp  = now_timestamp - 24*60*60*n;
+
+    if (timestamps[0] >= start_timestamp) {
+        printf("Need more historic data to calculate percentage change over %d days.\n", n);
+        return 0;
+    }
 
     int i = 0;
-    while (i < timestamps.size()-1) {
-        if (timestamps[i+1] >= start_timestamp) break;
+    while (i < timestamps.size()) {
+        if (timestamps[i] >= start_timestamp) break;
         i++;
     }
-    price_on_last_trading_day_n_days_ago = closing_prices[i];
-    double percentage_change = 100 * (current_price - price_on_last_trading_day_n_days_ago) / price_on_last_trading_day_n_days_ago;
+    price_n_days_ago = closing_prices[i-1];
+    double percentage_change = 100 * (current_price - price_n_days_ago) / price_n_days_ago;
     return percentage_change;
 }
 
