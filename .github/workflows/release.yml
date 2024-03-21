@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   release:
-    if: startsWith(github.event.pull_request.title, '[Release]')
+    if: startsWith(github.event.head_commit.message, '[Release]')
     strategy:
       matrix:
         os: [macOS-latest]
