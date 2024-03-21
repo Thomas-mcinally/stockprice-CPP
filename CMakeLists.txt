@@ -16,7 +16,7 @@ endif()
 # )
 include_directories(${CMAKE_SOURCE_DIR}/openssl-3.2.1/include)
 
-add_executable(Stockprice src/main.cpp)
+add_executable(Stockprice src/main.cpp src/get_ticker_statistics.cpp)
 # add_dependencies(Stockprice openssl)
 
 target_link_libraries(Stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a)
