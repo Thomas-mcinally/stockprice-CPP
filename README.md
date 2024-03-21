@@ -11,4 +11,3 @@
 
 ## Usage
 - `stockprice LIST,OF,TICKERS`
-
