@@ -38,7 +38,7 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
     return percentage_change;
 }
 
-TickerStatistics get_ticker_statistics(const std::string& ticker) {
+TickerStatistics get_ticker_statistics(const std::string &ticker) {
     httplib::Client cli("https://query2.finance.yahoo.com");
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
     std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=35d";

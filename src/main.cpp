@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
         tickers.push_back(ticker);
     }
 
-    for(const std::string &ticker : tickers) {
+    for(const std::string& ticker : tickers) {
         TickerStatistics statistics;
         try{
             statistics = get_ticker_statistics(ticker);
