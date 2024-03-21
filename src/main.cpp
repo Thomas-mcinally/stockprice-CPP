@@ -23,7 +23,8 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
     std::time_t start_timestamp  = now_timestamp - 24*60*60*n;
 
     if (timestamps[0] >= start_timestamp) {
-        printf("Need more historic data to calculate percentage change over %d days.\n", n);
+        std::string error_message = "Need more historic data to calculate percentage change over " + std::to_string(n) + " days.\n";
+        throw std::runtime_error(error_message);
         return 0;
     }
 
@@ -43,8 +44,8 @@ TickerStatistics get_ticker_statistics(const std::string& ticker) {
     std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
     auto res = cli.Get(path.c_str());
     if (res->status == 404){
-        printf("The ticker %s is not listed on Yahoo Finance.\n", ticker.c_str());
-        return TickerStatistics{}; // RAISE INSTEAD
+        std::string error_message = "The ticker " + ticker + " is not listed on Yahoo Finance.\n";
+        throw std::runtime_error(error_message);
     }
 
     nlohmann::json response_json = nlohmann::json::parse(res->body);
@@ -77,7 +78,13 @@ int main(int argc, char** argv) {
     }
 
     for(const std::string &ticker : tickers) {
-        TickerStatistics statistics = get_ticker_statistics(ticker);
+        TickerStatistics statistics;
+        try{
+            statistics = get_ticker_statistics(ticker);
+        } catch (const std::runtime_error& e) {
+            printf("Threw exception when processing ticker %s, error_message: %s",ticker.c_str(), e.what());
+            continue;
+        }
         printf("%s -- Current price: %.2f %s -- Daily change: %.2f%%, 7-day change: %.2f%%, 30-day change: %.2f%%\n", ticker.c_str(), statistics.current_price, statistics.currency.c_str(), statistics.percentage_change_1day, statistics.percentage_change_7day, statistics.percentage_change_30day);
 
     }
@@ -85,3 +92,7 @@ int main(int argc, char** argv) {
     return 0;
 }
 
+
+// TODO:
+// Crypto currently gives error when getting 30day stats
+// Refactor non-main functions into their own file
