@@ -5,6 +5,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
+#include <iostream>
 
 struct TickerStatistics {
     std::string ticker;
@@ -41,7 +42,7 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
 TickerStatistics get_ticker_statistics(const std::string& ticker) {
     httplib::Client cli("https://query2.finance.yahoo.com");
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
-    std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
+    std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=35d";
     auto res = cli.Get(path.c_str());
     if (res->status == 404){
         std::string error_message = "The ticker " + ticker + " is not listed on Yahoo Finance.\n";
@@ -94,5 +95,4 @@ int main(int argc, char** argv) {
 
 
 // TODO:
-// Crypto currently gives error when getting 30day stats
 // Refactor non-main functions into their own file
