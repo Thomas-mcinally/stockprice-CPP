@@ -6,6 +6,15 @@
 #include <chrono>
 #include <ctime>
 
+struct TickerStatistics {
+    std::string ticker;
+    std::string currency;
+    double current_price;
+    double percentage_change_1day;
+    double percentage_change_7day;
+    double percentage_change_30day;
+};
+
 double calculate_percentage_price_change_over_n_days(int n, std::vector<int> timestamps, std::vector<double> closing_prices) {
     double current_price = closing_prices.back();
     double price_n_days_ago;
@@ -28,14 +37,14 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
     return percentage_change;
 }
 
-void calculate_and_print_ticker_statistics(const std::string& ticker) {
+TickerStatistics calculate_ticker_statistics(const std::string& ticker) {
     httplib::Client cli("https://query2.finance.yahoo.com");
     cli.enable_server_certificate_verification(false); // Want to distribute as static binary
     std::string path = "/v8/finance/chart/" + ticker + "?interval=1d&range=30d";
     auto res = cli.Get(path.c_str());
     if (res->status == 404){
         printf("The ticker %s is not listed on Yahoo Finance.\n", ticker.c_str());
-        return;
+        return TickerStatistics{}; // RAISE INSTEAD
     }
 
     nlohmann::json response_json = nlohmann::json::parse(res->body);
@@ -49,7 +58,7 @@ void calculate_and_print_ticker_statistics(const std::string& ticker) {
     double percentage_change_7day = calculate_percentage_price_change_over_n_days(7, timestamps, closing_prices);
     double percentage_change_1day = calculate_percentage_price_change_over_n_days(1, timestamps, closing_prices);
 
-    printf("%s -- Current price: %.2f %s -- Daily change: %.2f%%, 7-day change: %.2f%%, 30-day change: %.2f%%\n", ticker.c_str(), current_price, currency.c_str(), percentage_change_1day, percentage_change_7day, percentage_change_30day);
+    return TickerStatistics{ticker, currency, current_price, percentage_change_1day, percentage_change_7day, percentage_change_30day};
 }
 
 int main(int argc, char** argv) {
@@ -68,7 +77,9 @@ int main(int argc, char** argv) {
     }
 
     for(const std::string &ticker : tickers) {
-        calculate_and_print_ticker_statistics(ticker);
+        TickerStatistics statistics = calculate_ticker_statistics(ticker);
+        printf("%s -- Current price: %.2f %s -- Daily change: %.2f%%, 7-day change: %.2f%%, 30-day change: %.2f%%\n", ticker.c_str(), statistics.current_price, statistics.currency.c_str(), statistics.percentage_change_1day, statistics.percentage_change_7day, statistics.percentage_change_30day);
+
     }
 
     return 0;
