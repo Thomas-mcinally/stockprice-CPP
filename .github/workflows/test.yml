@@ -9,9 +9,11 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [macOS-12, macos-14]
         include:
-          - os: macOS-latest
+          - os: macOS-12
+            bin_path: ./build/stockprice
+          - os: macOS-14
             bin_path: ./build/stockprice
     runs-on: ${{ matrix.os }}
     steps:
