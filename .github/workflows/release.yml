@@ -13,11 +13,14 @@ jobs:
     if: startsWith(github.event.head_commit.message, '[Release]')
     strategy:
       matrix:
-        os: [macOS-latest]
+        os: [macos-12, macos-14]
         include:
-          - os: macOS-latest
+          - os: macos-12
             bin_path: ./build/stockprice
             compressed_name: stockprice-bin-Darwin-x86_64.tar.gz
+          - os: macos-14
+            bin_path: ./build/stockprice
+            compressed_name: stockprice-bin-Darwin-arm64.tar.gz
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
