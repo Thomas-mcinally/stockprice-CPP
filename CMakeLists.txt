@@ -44,7 +44,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
         set(OPENSSL_CONFIGURE_TRIPLET "linux-generic64")
 
         add_custom_target(openssl
-            COMMAND ./Configure no-shared --prefix=${CMAKE_SOURCE_DIR}/openssl-3.2.1 --openssldir=${CMAKE_SOURCE_DIR}/openssl-3.2.1 ${OPENSSL_CONFIGURE_TRIPLET}
+            COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp --prefix=${CMAKE_SOURCE_DIR}/openssl-3.2.1 --openssldir=${CMAKE_SOURCE_DIR}/openssl-3.2.1 ${OPENSSL_CONFIGURE_TRIPLET}
             COMMAND make
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
         )
