@@ -41,10 +41,10 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     target_link_libraries(stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.lib ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.lib)
 elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(OPENSSL_CONFIGURE_TRIPLET "linux-generic64-cc")
+        set(OPENSSL_CONFIGURE_TRIPLET "linux-x86_64")
 
         add_custom_target(openssl
-            COMMAND ./Configure ${OPENSSL_CONFIGURE_TRIPLET}
+            COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp ${OPENSSL_CONFIGURE_TRIPLET}
             COMMAND make
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
         )
