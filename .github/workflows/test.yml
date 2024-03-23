@@ -11,10 +11,10 @@ jobs:
       matrix:
         os: [windows-latest]
         include:
-          # - os: macos-12
-          #   bin_path: ./build/stockprice
-          # - os: macos-14
-          #   bin_path: ./build/stockprice
+          - os: macos-12
+            bin_path: ./build/stockprice
+          - os: macos-14
+            bin_path: ./build/stockprice
           - os: windows-latest
             bin_path: ./build/Release/stockprice.exe
     runs-on: ${{ matrix.os }}
