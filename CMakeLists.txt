@@ -49,7 +49,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
     )
     add_dependencies(stockprice openssl)
-    target_link_libraries(stockprice -Wl,--whole-archive ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a -Wl,--no-whole-archive)
+    target_link_libraries(stockprice -Wl,--whole-archive ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a -Wl,--no-whole-archive -static)
 else()
     message(FATAL_ERROR "Unsupported system: ${CMAKE_HOST_SYSTEM_NAME}")
 endif()
