@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 11)
 project(Stockprice)
 
+if(MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded") #statically link
+endif()
+
 add_executable(Stockprice src/main.cpp src/get_ticker_statistics.cpp)
 
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
