@@ -28,7 +28,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     endif()
 
     add_custom_target(openssl
-        COMMAND perl Configure no-shared no-zlib enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
+        COMMAND perl Configure no-shared no-asm no-zlib enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
         COMMAND nmake
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
     )
