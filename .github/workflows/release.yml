@@ -13,7 +13,7 @@ jobs:
     if: startsWith(github.event.head_commit.message, '[Release]')
     strategy:
       matrix:
-        os: [macos-12, macos-14]
+        os: [macos-12, macos-14, windows-latest]
         include:
           - os: macos-12
             bin_path: ./build/stockprice
@@ -21,6 +21,9 @@ jobs:
           - os: macos-14
             bin_path: ./build/stockprice
             compressed_name: stockprice-bin-Darwin-arm64.tar.gz
+          - os: windows-latest
+            bin_path: ./build/Release/stockprice.exe
+            compressed_name: stockprice-bin-windows-x86_64.zip
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository

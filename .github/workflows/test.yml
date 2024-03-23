@@ -9,12 +9,14 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-12, macos-14]
+        os: [windows-latest]
         include:
           - os: macos-12
             bin_path: ./build/stockprice
           - os: macos-14
             bin_path: ./build/stockprice
+          - os: windows-latest
+            bin_path: ./build/Release/stockprice.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
@@ -27,4 +29,4 @@ jobs:
           cmake --build . --config Release
       - name: test
         run: |
-          ${{ matrix.bin_path }}
+          ${{ matrix.bin_path }} tsla,btc-usd
