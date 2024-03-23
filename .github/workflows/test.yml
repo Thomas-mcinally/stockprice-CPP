@@ -9,7 +9,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-12, macos-14, windows-latest, ubuntu-latest]
         include:
           - os: macos-12
             bin_path: ./build/stockprice
@@ -17,6 +17,8 @@ jobs:
             bin_path: ./build/stockprice
           - os: windows-latest
             bin_path: ./build/Release/stockprice.exe
+          - os: ubuntu-latest
+            bin_path: ./build/stockprice
     runs-on: ${{ matrix.os }}
     steps:
       - name: Git clone the repository
