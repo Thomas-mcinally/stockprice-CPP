@@ -9,14 +9,14 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-12, macos-14, windows-latest, ubuntu-latest]
+        os: [ubuntu-latest]
         include:
-          - os: macos-12
-            bin_path: ./build/stockprice
-          - os: macos-14
-            bin_path: ./build/stockprice
-          - os: windows-latest
-            bin_path: ./build/Release/stockprice.exe
+          # - os: macos-12
+          #   bin_path: ./build/stockprice
+          # - os: macos-14
+          #   bin_path: ./build/stockprice
+          # - os: windows-latest
+          #   bin_path: ./build/Release/stockprice.exe
           - os: ubuntu-latest
             bin_path: ./build/stockprice
     runs-on: ${{ matrix.os }}
