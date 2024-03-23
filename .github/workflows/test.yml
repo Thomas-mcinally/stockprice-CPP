@@ -32,3 +32,6 @@ jobs:
       - name: test
         run: |
           ${{ matrix.bin_path }} tsla,btc-usd
+      - name: Check dynamic dependencies
+        run: |
+          ldd ${{ matrix.bin_path }}
