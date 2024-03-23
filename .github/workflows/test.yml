@@ -30,16 +30,3 @@ jobs:
       - name: test
         run: |
           ${{ matrix.bin_path }} tsla,btc-usd
-      - name: Setup MinGW
-        if: runner.os == 'Windows'
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: >-
-            mingw-w64-x86_64-binutils
-      - name: List DLL dependencies
-        if: runner.os == 'Windows'
-        run: |
-          echo "List DLL dependencies"
-          objdump -p ${{ matrix.bin_path }} | grep 'DLL Name'
