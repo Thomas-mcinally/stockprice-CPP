@@ -40,19 +40,16 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     add_dependencies(stockprice openssl)
     target_link_libraries(stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.lib ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.lib)
 elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(OPENSSL_CONFIGURE_TRIPLET "linux-generic64")
+    # if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    set(OPENSSL_CONFIGURE_TRIPLET "linux-generic64")
 
-        add_custom_target(openssl
-            COMMAND ./Configure no-shared  ${OPENSSL_CONFIGURE_TRIPLET}
-            COMMAND make
-            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
-        )
-        add_dependencies(stockprice openssl)
-        target_link_libraries(stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a -lz -ldl -static-libgcc)
-    else()
-        message(FATAL_ERROR "Unsupported architecture: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-    endif()
+    add_custom_target(openssl
+        COMMAND ./Configure no-shared  ${OPENSSL_CONFIGURE_TRIPLET}
+        COMMAND make
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
+    )
+    add_dependencies(stockprice openssl)
+    target_link_libraries(stockprice ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libcrypto.a ${CMAKE_SOURCE_DIR}/openssl-3.2.1/libssl.a)
 else()
     message(FATAL_ERROR "Unsupported system: ${CMAKE_HOST_SYSTEM_NAME}")
 endif()
