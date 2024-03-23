@@ -19,7 +19,7 @@ if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     endif()
 
     add_custom_target(openssl
-        COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
+        COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp ${OPENSSL_CONFIGURE_TRIPLET}
         COMMAND make
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
     )
@@ -33,7 +33,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Windows")
     endif()
 
     add_custom_target(openssl
-        COMMAND perl Configure no-shared no-asm no-zlib no-psk no-srp enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
+        COMMAND perl Configure no-shared no-asm no-zlib no-psk no-srp ${OPENSSL_CONFIGURE_TRIPLET}
         COMMAND nmake
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
     )
@@ -44,7 +44,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME STREQUAL "Linux")
         set(OPENSSL_CONFIGURE_TRIPLET "linux-generic64")
 
         add_custom_target(openssl
-            COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp enable-rc5 ${OPENSSL_CONFIGURE_TRIPLET}
+            COMMAND ./Configure no-shared no-asm no-zlib no-psk no-srp ${OPENSSL_CONFIGURE_TRIPLET}
             COMMAND make
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/openssl-3.2.1
         )
