@@ -27,4 +27,4 @@ jobs:
           cmake --build . --config Release
       - name: test
         run: |
-          ${{ matrix.bin_path }}
+          ${{ matrix.bin_path }} tsla,btc-usd
