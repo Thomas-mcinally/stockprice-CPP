@@ -30,3 +30,6 @@ jobs:
       - name: test
         run: |
           ${{ matrix.bin_path }} tsla,btc-usd
+      - name: List DLL dependencies
+        run: |
+          dumpbin /DEPENDENTS ${{ matrix.bin_path }}
