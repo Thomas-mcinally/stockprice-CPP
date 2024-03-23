@@ -3,7 +3,8 @@ set(CMAKE_CXX_STANDARD 11)
 project(Stockprice)
 
 if(MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded") #statically link
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
 
 add_executable(Stockprice src/main.cpp src/get_ticker_statistics.cpp)
