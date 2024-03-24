@@ -1,7 +1,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "../include/stockprice/get_ticker_statistics.hpp"
+#include "../include/get_ticker_statistics.hpp"
 
 
 int main(int argc, char** argv) {
