@@ -1,6 +1,6 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
-#include "../include/httplib/httplib.h"
-#include "../include/nlohmann_json/json.hpp"
+#include "../libs/httplib/httplib.h"
+#include "../libs/nlohmann_json/json.hpp"
 #include <vector>
 #include <chrono>
 #include <ctime>
