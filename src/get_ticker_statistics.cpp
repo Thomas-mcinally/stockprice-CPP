@@ -25,7 +25,6 @@ double calculate_percentage_price_change_over_n_days(int n, std::vector<int> tim
     if (timestamps[0] >= start_timestamp) {
         std::string error_message = "Need more historic data to calculate percentage change over " + std::to_string(n) + " days.\n";
         throw std::runtime_error(error_message);
-        return 0;
     }
 
     int i = 0;
