@@ -6,12 +6,12 @@ Works for all tickers listed on Yahoo Finance, including cryptocurrency trading 
 
 
 ## Installation
-- Recommended method is to download and use the static binary provided
-    - Download appropriate binary from [release page](https://github.com/Thomas-mcinally/stockprice-CPP/releases/) 
+- Recommended method:
+    - Download appropriate static binary from [release page](https://github.com/Thomas-mcinally/stockprice-CPP/releases/) 
     - Move binary to location that is in PATH
     - That's it!
 
-- Alternatively you can
+- Alternative methods:
   - Clone this repo and build binary yourself (Provided `CMakeLists.txt`should work for Windows/MacOS/Linux)
   - If you already have Python installed, download [Python version via pip](https://github.com/Thomas-mcinally/stockprice)
 
